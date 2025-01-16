@@ -141,7 +141,6 @@ const alightScrape = require('./lib/api/alightmotion');
 const BukaLapak = require('./lib/api/bukalapak');
 const chatSimi = require('./lib/api/simsimi');
 const gempa = require('./lib/api/bmkg');
-const GDrive = require('./lib/api/drive');
 const hentai = require('./lib/api/hentai');
 const jktNews = require('./lib/api/jktNews');
 const Kusonime = require('./lib/api/kusonime');
@@ -6553,34 +6552,9 @@ module.exports = haruka = async (haruka, m, msg, chatUpdate, store) => {
 			}
 			db.data.users[m.sender].limit -= 1;
 			break;
+			
 
-			case 'gddl':
-			case 'gdrivedl':
-			case 'gdrive': {
-				if (!isPremium && db.data.users[m.sender].limit < 1) return newReply(mess.limit);
-				if (!text) return newReply(`Gunakan dengan cara ${prefix + command} *url*`)
-				if (!text.includes('drive')) return newReply('Link nggak valid')
-				try {
-					const res = await GDrive(text);
-					if (res.error) return newReply('URL tidak valid, periksa ulang apakah akses ke URL sudah public?')
-					haruka.sendMessage(m.chat, {
-						document: {
-							url: res.downloadUrl
-						},
-						mimetype: res.mimetype,
-						fileName: res.fileName,
-						caption: `*GOOGLE DRIVE*\n\n*Nama:* ${res.fileName}\n*Size:* ${res.fileSize}\n*Type:* ${res.mimetype}`
-					}, {
-						quoted: m
-					})
-				} catch (error) {
-					console.log(error);
-				}
-			}
-			db.data.users[m.sender].limit -= 1;
-			break;
-
-			case 'pinterest': case 'pin': {
+	 	case 'pinterest': case 'pin': {
 				if (!isPremium && db.data.users[m.sender].limit < 1) return newReply(mess.limit);
 				if (!text) return newReply(`Enter Query!`);
 				await reactionMessage('⏱️');
@@ -7182,7 +7156,7 @@ module.exports = haruka = async (haruka, m, msg, chatUpdate, store) => {
 				let pintarAcak = tingkatKepintaran[Math.floor(Math.random() * tingkatKepintaran.length)];
 				let beraniAcak = tingkatKeberanian[Math.floor(Math.random() * tingkatKeberanian.length)];
 				let takutAcak = tingkatKetakutan[Math.floor(Math.random() * tingkatKetakutan.length)];
-				let profil = `*🎀━━━〔 𝗖𝗵𝗲𝗰𝗸 @${idPengirim.split('@')[0]} 〕━━━🎀*\n\n📝 *Nama:* ${pushname}\n✨ *Karakteristik:* ${sifatAcak}\n🎯 *Hobi:* ${hobiAcak}\n❤️ *Tingkat Bucin:* ${bucinAcak}%\n🌟 *Tingkat Keren:* ${kerenAcak}%\n😎 *Ketampanan:* ${tampanAcak}\n🧠 *Watak:* ${watakAcak}\n💎 *Moral Baik:* ${moralBaikAcak}%\n🔥 *Moral Buruk:* ${moralBurukAcak}%\n📊 *Kepintaran:* ${pintarAcak}%\n🛡️ *Keberanian:* ${beraniAcak}%\n👻 *Ketakutan:* ${takutAcak}%\n\n*🍭━━━〔 𝗖𝗛𝗘𝗖𝗞 𝗣𝗥𝗢𝗣𝗘𝗥𝗧𝗜𝗘𝗦 〕━━━🍭*`;
+				let profil = `*🎀━━━〔 𝗖𝗵𝗲𝗰𝗸 @${idPengirim.split('@')[0]} 〕━━━🎀*\n\n📝 *Nama:* ${pushname}\n✨ *Karakteristik:* ${sifatAcak}\n🎯 *Hobi:* ${hobiAcak}\n❤️ *Tingkat Bucin:* ${bucinAcak}%\n🌟 *Tingkat Keren:* ${kerenAcak}%\n😎 *Ketampanan:* ${tampanAcak}\n🧠 *Watak:* ${watakAcak}\n💎 *Moral Baik:* ${moralBaikAcak}%\n🔥 *Moral Buruk:* ${moralBurukAcak}%\n📊 *Kepintaran:* ${pintarAcak}%\n🛡️ *Keberanian:* ${beraniAcak}%\n👻 *Ketakutan:* ${takutAcak}%\n\n*🍭━━━〔 𝗖𝗛𝗘𝗖𝗞 𝗣𝗥𝗢𝗣𝗘𝗥𝗧𝗜𝗘?? 〕━━━🍭*`;
 				try {
 					ppuser = await haruka.profilePictureUrl(m.sender, 'image');
 				} catch (err) {
